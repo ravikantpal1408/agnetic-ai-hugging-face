@@ -200,3 +200,5 @@ cache/
 
 # Python init files
 __init__.py
+
+.env
