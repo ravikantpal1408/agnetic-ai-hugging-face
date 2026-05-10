@@ -1,9 +1,5 @@
-import datetime
-import time
-
-import numpy as np
 from dotenv import load_dotenv
-from smolagents import CodeAgent, DuckDuckGoSearchTool, OpenAIServerModel, tool
+from smolagents import CodeAgent, OpenAIServerModel, tool
 
 load_dotenv()
 
