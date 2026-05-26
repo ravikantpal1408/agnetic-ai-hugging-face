@@ -18,7 +18,7 @@ Settings.llm = OpenAILike(
     model="qwen/qwen2.5-vl-7b",
     api_base="http://192.168.1.10:1234/v1",  # Your remote machine's IP
     api_key="not-needed",
-    temperature=0.7,
+    temperature=0,
     is_chat_model=True,
 )
 
@@ -61,12 +61,17 @@ else:
 
 # 5. Connect LlamaIndex to the vector store to query it
 storage_context = StorageContext.from_defaults(vector_store=vector_store)
+
 index = VectorStoreIndex.from_vector_store(
-    vector_store, storage_context=storage_context
+    vector_store,
+    storage_context=storage_context,
+    embed_model=Settings.embed_model,  # Ensures embeddings match if needed
 )
 
 # 6. Test Query
-query_engine = index.as_query_engine()
+query_engine = index.as_query_engine(llm=Settings.llm)
+
+print("Sending query to remote LM Studio...")
 response = query_engine.query("What are the core features of Node.js?")
 
 print("\nResponse from Remote LM Studio:")
